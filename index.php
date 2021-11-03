@@ -1,7 +1,5 @@
 <?php
-$precise1 = 1.5;
-$precise2 = 1.5e4;
-$precise3 = 6E-8;
+$hello = 'Hello, XAMMP works...';
 ?>
 
 <!DOCTYPE html>
@@ -13,6 +11,6 @@ $precise3 = 6E-8;
   <title>GB</title>
 </head>
 <body>
-  <h1>XAMMP works...</h1>
+  <h1><?= $hello ?></h1>
 </body>
 </html>
