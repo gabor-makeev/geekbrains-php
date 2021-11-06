@@ -1,5 +1,25 @@
 <?php
-$hello = 'Hello, XAMMP works...';
+/* 
+  Задание 1. Объявить две целочисленные переменные $a и $b и задать им произвольные начальные значения. Затем написать скрипт, который работает по следующему принципу:
+  если $a и $b положительные, вывести их разность;
+  если $а и $b отрицательные, вывести их произведение;
+  если $а и $b разных знаков, вывести их сумму;
+*/
+
+$randMinEdge = -100;
+$randMaxEdge = 100;
+$a = rand($randMinEdge, $randMaxEdge);
+$b = rand($randMinEdge, $randMaxEdge);
+
+echo "<span>a = $a, b = $b</span></br>";
+
+if($a >= 0 and $b >= 0) {
+  echo $a != $b ? abs($a - $b) : 'Числа равны';
+} else if($a < 0 and $b < 0) {
+  echo $a * $b;
+} else {
+  echo $a + $b;
+};
 ?>
 
 <!DOCTYPE html>
@@ -11,6 +31,6 @@ $hello = 'Hello, XAMMP works...';
   <title>GB</title>
 </head>
 <body>
-  <h1><?= $hello ?></h1>
+  
 </body>
 </html>
