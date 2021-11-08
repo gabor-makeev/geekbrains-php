@@ -148,7 +148,18 @@ echo "$a / $b = " . mathOperation($a, $b, "divide") . "</br>";
   где $val – заданное число, $pow – степень.
 */
 
-// [add script here]
+function power($val, $pow) {
+  if ($pow === 1) {
+    return $val;
+  };
+  return $val * power($val, $pow - 1);
+};
+
+$a = rand(1, 10);
+$b = rand(1, 10);
+
+echo "<h3>Задание 6.</h3><p>Допустим мы возводим $a в $b степень.</p><span>Результат:</span></br>";
+echo power($a, $b);
 
 /*
   Задание 7. *Написать функцию, которая вычисляет текущее время и возвращает его в формате с правильными склонениями, например:
