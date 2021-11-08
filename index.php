@@ -167,7 +167,52 @@ echo power($a, $b);
   21 час 43 минуты
 */
 
-// [add script here]
+function currentTime() {
+  $hour = (int)date('H');
+  $minute = (int)date('i');
+  $second = (int)date('s');
+
+  if ($hour === 1 || $hour === 21) {
+    $hour = $hour . ' час';
+  } else if ($hour >= 5 and $hour <= 20) {
+    $hour = $hour . ' часов';
+  } else {
+    $hour = $hour . ' часа';
+  };
+
+  if (($minute % 10) === 1 and $minute !== 11) {
+    $minute = $minute . ' минута';
+  } else if (
+    (
+      ($minute % 10) === 2 || 
+      ($minute % 10) === 3 || 
+      ($minute % 10) === 4
+    ) and ($minute < 12 || $minute > 14)
+  ) {
+    $minute = $minute . ' минуты';
+  } else {
+    $minute = $minute . ' минут';
+  };
+
+  if (($second % 10) === 1 and $second !== 11) {
+    $second = $second . ' секунда';
+  } else if (
+    (
+      ($second % 10) === 2 || 
+      ($second % 10) === 3 || 
+      ($second % 10) === 4
+    ) and ($second < 12 || $second > 14)
+  ) {
+    $second = $second . ' секунды';
+  } else {
+    $second = $second . ' секунд';
+  };
+
+  return "$hour $minute $second";
+};
+
+echo '<h3>Задание 7.</h3><p>Текущее время:</p>';
+echo currentTime();
 
 ?>
 
