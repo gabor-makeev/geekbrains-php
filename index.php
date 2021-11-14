@@ -4,7 +4,9 @@ function fetchImages() {
   global $images;
   $images = [];
   foreach(scandir('images') as $file) {
-    !is_dir($file) ? array_push($images, "images/$file") : 'This is a dir';
+    if (!is_dir($file) and $file !== '.gitkeep') {
+      array_push($images, "images/$file");
+    }
   }
 }
 
@@ -38,7 +40,7 @@ fetchImages();
       </div>
       <div class="gallery-image-uploader">
         <form action="image_upload.php" method="POST" enctype="multipart/form-data" class="gallery-image-uploader__form">
-          <input type="file" name="user_image" class="gallery-image-uploader__input">
+          <input type="file" name="user_image" required class="gallery-image-uploader__input">
           <input type="submit" value="Загрузить" class="gallery-image-uploader__submit">
         </form>
       </div>
