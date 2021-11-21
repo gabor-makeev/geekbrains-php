@@ -62,16 +62,10 @@ if ($_POST) {
     <label for="num_2">Second number:
       <input type="number" name="num_2" required>
     </label><br>
-    <label for="operation">Operation:
-      <select name="operation">
-        <option value="0" selected>Выберите операцию</option>
-        <option value="addition">Сложение</option>
-        <option value="subtraction">Вычитание</option>
-        <option value="multiplication">Умножение</option>
-        <option value="division">Деление</option>
-      </select>
-    </label><br>
-    <input type="submit">
+    <input type="submit" value="addition" name="operation">
+    <input type="submit" value="subtraction" name="operation">
+    <input type="submit" value="multiplication" name="operation">
+    <input type="submit" value="division" name="operation">
   </form>
   <?php if ($result or $result == 0) : ?>
     <p>Result: <?= $result ?></p>
