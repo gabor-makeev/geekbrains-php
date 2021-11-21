@@ -1,0 +1,22 @@
+-- база данных (для второго задания)
+DROP DATABASE IF EXISTS gallery;
+CREATE DATABASE gallery;
+
+USE gallery;
+
+DROP TABLE IF EXISTS images;
+CREATE TABLE images (
+  id SERIAL PRIMARY KEY,
+  `name` VARCHAR(150) NOT NULL UNIQUE,
+  `url` VARCHAR(255) UNIQUE NOT NULL,
+  view_count INT UNSIGNED NOT NULL DEFAULT 0,
+  size INT UNSIGNED NOT NULL
+);
+
+DROP TABLE IF EXISTS comments;
+CREATE TABLE comments (
+  id SERIAL PRIMARY KEY,
+  image_id BIGINT UNSIGNED NOT NULL,
+  body TEXT NOT NULL,
+  FOREIGN KEY (image_id) REFERENCES images(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
