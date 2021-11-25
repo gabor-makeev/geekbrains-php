@@ -6,11 +6,15 @@ if (isset($_POST['username'], $_POST['password'])) {
     $query = "SELECT username, password FROM users WHERE username ='" . $_POST['username'] . "';";
     $query = mysqli_query($shop_db, $query);
     $queryResult = mysqli_fetch_assoc($query);
-    if (password_verify($_POST['password'], $queryResult['password'])) {
-      setcookie('loggedIn', '1');
-      setcookie('user', $queryResult['username']);
-      header('location: account.php');
-      die;
+    if ($queryResult) {
+      if (password_verify($_POST['password'], $queryResult['password'])) {
+        setcookie('loggedIn', '1');
+        setcookie('user', $queryResult['username']);
+        header('location: account.php');
+        die;
+      } else {
+        $loginStatus = 'Failed to log in. Either your username or password is not correct.';
+      }
     } else {
       $loginStatus = 'Failed to log in. Either your username or password is not correct.';
     }
