@@ -1,4 +1,9 @@
 <?php
+
+if (!isset($_COOKIE['loggedIn'])) {
+  header('location: login.php');
+}
+
 require_once './db.php';
 
 session_start();
@@ -11,7 +16,19 @@ if ($_POST) {
   if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
   } else {
-    $_SESSION['cart'][] = $newCartItem;
+    $is_in_array = false;
+    foreach ($_SESSION['cart'] as $idx => $cartItem) {
+      if ($cartItem['id'] === $newCartItem['id']) {
+        $is_in_array = !$is_in_array;
+        $existingItemIdx = $idx;
+      }
+    }
+    if ($is_in_array) {
+      $_SESSION['cart'][$existingItemIdx]['quantity']++;
+    } else {
+      $newCartItem['quantity'] = 1;
+      $_SESSION['cart'][] = $newCartItem;
+    }
   }
 }
 
@@ -27,7 +44,10 @@ if ($shop_db) {
   }
 }
 
-var_dump($_SESSION['cart']);
+if (isset($_POST['log_out'])) {
+  setcookie('loggedIn', '0', time() - 3600);
+  header('location: login.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -38,17 +58,16 @@ var_dump($_SESSION['cart']);
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GB</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <div class="wrapper">
-    <header class="header">
-      <ul class="header__menu">
-        <li class="header__menu-item"><a href="#" class="header__menu-link">Home</a></li>
-        <li class="header__menu-item"><a href="#" class="header__menu-link">Account</a></li>
-        <li class="header__menu-item"><a href="#" class="header__menu-link">Cart</a></li>
-      </ul>
-    </header>
+    <?php require_once './components/Header.php' ?>
+    <form action="index.php" method="POST" class="log_out">
+      <input type="hidden" name="log_out" value="1">
+      <input type="submit" value="log out" class="header__menu-item header__menu-link">
+    </form>
     <div class="catalog">
       <?php if ($goods) : ?>
         <?php foreach ($goods as $good) : ?>
@@ -65,74 +84,3 @@ var_dump($_SESSION['cart']);
 </body>
 
 </html>
-
-<style>
-  * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
-
-  .wrapper {
-    width: 1000px;
-    margin: 0 auto;
-  }
-
-  .catalog {
-    display: flex;
-    justify-content: space-between;
-    padding: 50px 0;
-  }
-
-  .catalog__good-card {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    border: 1px solid black;
-    border-radius: 15px;
-  }
-
-  .catalog__good-title {
-    margin: 0 0 10px 0;
-  }
-
-  .catalog__good-button {
-    cursor: pointer;
-  }
-
-  .header {
-    padding: 20px 0;
-  }
-
-  .header__menu {
-    display: flex;
-    justify-content: space-evenly;
-  }
-
-  .header__menu-item {
-    list-style-type: none;
-  }
-
-  .header__menu-link {
-    text-decoration: none;
-    cursor: pointer;
-    padding: 10px 30px;
-    background-color: grey;
-    color: white;
-    outline: 1px solid black;
-    outline-offset: -1px;
-    transition: 0.3s;
-  }
-
-  .header__menu-link:hover {
-    background-color: white;
-    color: black;
-    outline: 1px solid grey;
-  }
-
-  .header__menu-link:active {
-    background-color: grey;
-    color: white;
-    outline: 1px solid black;
-  }
-</style>

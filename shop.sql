@@ -3,6 +3,7 @@ CREATE DATABASE shop;
 
 USE shop;
 
+DROP TABLE IF EXISTS goods;
 CREATE TABLE goods (
   id SERIAL PRIMARY KEY,
   name VARCHAR(150) UNIQUE NOT NULL
@@ -14,3 +15,13 @@ VALUES
   ('Monitor'),
   ('Keyboard'),
   ('Mouse');
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  firstname VARCHAR(150) NOT NULL,
+  lastname VARCHAR(150) NOT NULL,
+  username VARCHAR(150) NOT NULL UNIQUE,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL
+);
